@@ -1,4 +1,5 @@
 import Enums.Categories;
+import Player.PlayerModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -55,11 +56,12 @@ class GameManagerTest {
                 Arguments.of(0, Categories.DUZY_STRIT, List.of(1, 4, 3, 5, 6)),
                 Arguments.of(30, Categories.MALY_STRIT, List.of(2, 3, 4, 5, 6)),
                 Arguments.of(30, Categories.MALY_STRIT, List.of(1, 2, 3, 4, 5)),
+                Arguments.of(30, Categories.MALY_STRIT, List.of(3, 4, 5, 2, 2)),
                 Arguments.of(0, Categories.MALY_STRIT, List.of(1, 2, 6, 4, 5)),
                 Arguments.of(0, Categories.MALY_STRIT, List.of(1, 2, 3, 6, 5)),
                 Arguments.of(0, Categories.MALY_STRIT, List.of(1, 2, 2, 4, 4)),
                 Arguments.of(30, Categories.MALY_STRIT, List.of(6, 5, 4, 3, 2)),
-                Arguments.of(0, Categories.MALY_STRIT, List.of(4, 3, 6, 5, 5)),
+                Arguments.of(30, Categories.MALY_STRIT, List.of(4, 3, 6, 5, 5)),
                 Arguments.of(0, Categories.GENERAL, List.of(4, 3, 6, 5, 5)),
                 Arguments.of(50, Categories.GENERAL, List.of(5, 5, 5, 5, 5)),
                 Arguments.of(25, Categories.SZANSA, List.of(5, 5, 5, 5, 5)),
@@ -72,27 +74,29 @@ class GameManagerTest {
         // Arrange
         GameManager sut = new GameManager();
         List<String> lisOfLetters = List.of("A", "C", "E");
-        List<Integer> discardedDice = List.of(1,3,5,6,4);
+        List<Integer> discardedDice = List.of(1, 3, 5, 6, 4);
         // Act
-        List<Integer> result = sut.listOfDicesInGame ( lisOfLetters,  discardedDice);
+        List<Integer> result = sut.listOfDicesInGame(lisOfLetters, discardedDice);
 
         // Assert
-        assertEquals(List.of(1,5,4), result);
+        assertEquals(List.of(1, 5, 4), result);
 
     }
+
     @Test
     public void listOfDicesInGame_2_Test() {
         // Arrange
         GameManager sut = new GameManager();
         List<String> lisOfLetters = List.of("D", "C", "E");
-        List<Integer> discardedDice = List.of(1,3,5,6,4);
+        List<Integer> discardedDice = List.of(1, 3, 5, 6, 4);
         // Act
-        List<Integer> result = sut.listOfDicesInGame ( lisOfLetters,  discardedDice);
+        List<Integer> result = sut.listOfDicesInGame(lisOfLetters, discardedDice);
 
         // Assert
-        assertEquals(List.of(6,5,4), result);
+        assertEquals(List.of(6, 5, 4), result);
 
     }
+
     @Test
     public void createListOfLetters_ACD_1_Test() {
         // Arrange
@@ -102,9 +106,10 @@ class GameManagerTest {
         List<String> result = sut.createListOfLetters("A,C,D");
 
         // Assert
-        assertEquals(List.of("A","C","D"), result);
+        assertEquals(List.of("A", "C", "D"), result);
 
     }
+
     @Test
     public void createListOfLetters_Ace_1_Test() {
         // Arrange
@@ -114,9 +119,10 @@ class GameManagerTest {
         List<String> result = sut.createListOfLetters("A,c,e");
 
         // Assert
-        assertEquals(List.of("A","C","E"), result);
+        assertEquals(List.of("A", "C", "E"), result);
 
     }
+
     @Test
     public void createListOfLetters_ACD_AB_Test() {
         // Arrange
@@ -127,7 +133,39 @@ class GameManagerTest {
         List<String> result = sut.createListOfLetters("A,B");
 
         // Assert
-        assertEquals(List.of("A","B"), result);
+        assertEquals(List.of("A", "B"), result);
 
     }
+
+//    @Test
+//    public void keepAndRoll_Test(){
+//        // Arrange
+//        GameManager sut = new GameManager();
+//
+//        // Act
+//        sut.createListOfLetters("A,B");
+//        List<Integer> result =  sut.keepAndRoll("pierwszego", List.of(1,3,5));
+//
+//        // Assert
+//        assertEquals(5, result.size());
+//    }
+
+//    @Test
+//    public void addPointsToTable() {
+//        // Arrange
+//        PlayerModel playerModel = new PlayerModel("Ania");
+//
+//
+//        // Act
+//        playerModel.addResult(Categories.JEDYNKI, 5);
+//        playerModel.addResult(Categories.DWOJKI, 12);
+//
+//
+//        boolean result = playerModel.addResult(Categories.JEDYNKI, 10);
+//
+//        // Assert
+//        assertFalse(result);
+
+
+
 }

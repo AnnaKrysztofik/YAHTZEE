@@ -5,6 +5,7 @@ import Points.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,9 +16,7 @@ public class GameManager {
     private PlayerModel current;
     UserInterface userInterface = new UserInterface();
     RzutKostkamiModel rzutKostkamiModel;
-   private  List<Integer> dicesInGame;
-
-    //main.GameManager gameManager;
+    private List<Integer> dicesInGame;
 
     List<PointsCalculateStrategyInterface> pointsCounterStrategies = List.of(
             new SinglesCalculateStrategy(),
@@ -30,7 +29,6 @@ public class GameManager {
             new ChanceCalculateStrategy()
     );
 
-
     List<Integer> dieces;
 
     public GameManager() {
@@ -40,10 +38,6 @@ public class GameManager {
         current = player1;
         rzutKostkamiModel = new RzutKostkamiModel();
         dicesInGame = new ArrayList<>();
-
-
-        //  player1.addResult(Categories.DWOJKI, 11);
-        //  player2.addResult(Categories.DWOJKI, 22);
     }
 
     private void nextPlayer() {
@@ -56,46 +50,26 @@ public class GameManager {
         userInterface.welcomeScreen();
         userInterface.wyswietlTabliceZeStanemGry(player1, player2);
         do {
+
             userInterface.displayPlayer(current);
+dicesInGame.clear();
+            List<Integer> discardedDice = rollTheRemainingDice("pierwszego", dicesInGame);
+            List<Integer> discardedDice2 = keepAndRoll("drugiego", discardedDice);
+            List<Integer> discardedDice3 = keepAndRoll("trzeciego", discardedDice2);
 
+            //GRACZ WYBIERA KATGORIĘ
+            Categories choosenCategory;
+            do {
+                choosenCategory = selectCategories();
+            } while (current.containsCategory(choosenCategory)==false);
 
-                                                                             //   generateRollOfDice();
+                //LICZYMY PUNKTY
+           addPointsToTable(choosenCategory, discardedDice3);
+           // addPointsToTable(discardedDice3);
 
-            userInterface.inscriptionRollTheDices("pierwszego");
-            List<Integer> discardedDice = rzutKostkamiModel.rzutPieciomaKostkami();
-             userInterface.wyswietlRzutKostka(discardedDice);
-
-                                                                                 //  rollTheRemainingDice("pierwszego");
-
-                String letters = userInterface.inscriptionChooseDices();
-                List<String> lisOfLetters = createListOfLetters(letters);
-                dicesInGame  = listOfDicesInGame(lisOfLetters, discardedDice);
-                userInterface.listOfKeepDices(dicesInGame);
-
-
-                //drugi rzut
-            userInterface.inscriptionRollTheDices("drugiego");
-            List<Integer> discardedDice2 = rzutKostkamiModel.kolejnyRzutKostkami(dicesInGame);
-              userInterface.wyswietlRzutKostka(discardedDice2);
-
-
-
-                String letters2 = userInterface.inscriptionChooseDices();
-                List<String> lisOfLetters2 = createListOfLetters(letters2);
-                dicesInGame  = listOfDicesInGame(lisOfLetters2, discardedDice2);
-                userInterface.listOfKeepDices(dicesInGame);
-
-
-                //trzeci rzut
-            userInterface.inscriptionRollTheDices("trzeciego");
-            List<Integer> discardedDice3 = rzutKostkamiModel.kolejnyRzutKostkami(dicesInGame);
-            userInterface.wyswietlRzutKostka(discardedDice3);
-
-
-
-        } while (false);
+            nextPlayer();
+        } while (endOfGame() == false);
     }
-
 
     public int calculatePoints(Categories category, List<Integer> dices) {
         return pointsCounterStrategies.stream()
@@ -104,8 +78,7 @@ public class GameManager {
                 .sum();
     }
 
-
-    public List<Integer> listOfDicesInGame ( List<String> lisOfLetters, List<Integer> discardedDice) {
+    public List<Integer> listOfDicesInGame(List<String> lisOfLetters, List<Integer> discardedDice) {
 
         List<Integer> myList = new ArrayList<>();
         for (int i = 0; i < lisOfLetters.size(); i++) {
@@ -126,26 +99,61 @@ public class GameManager {
                     myList.add(discardedDice.get(4));
                     break;
             }
-        } return myList;
+        }
+        return myList;
     }
 
-    public List<String> createListOfLetters(String letters){
+    public List<String> createListOfLetters(String letters) {
         String[] letter = letters.split(",", 5);
-      return  Stream.of(letter).map(s->s.toUpperCase()).collect(Collectors.toList());
+        return Stream.of(letter).map(s -> s.toUpperCase()).collect(Collectors.toList());
+    }
+
+
+    public List<Integer> generateRollOfDice(List<Integer> discardedDice) {
+        String letters = userInterface.inscriptionChooseDices();
+        List<String> lisOfLetters = createListOfLetters(letters);
+        dicesInGame = listOfDicesInGame(lisOfLetters, discardedDice);
+        userInterface.listOfKeepDices(dicesInGame);
+        return dicesInGame;
     }
 
 
 
-//    public List<Integer> generateRollOfDice()
-//    {
-//
-//    }
+
+    public List<Integer> rollTheRemainingDice(String ktorego, List<Integer> dicesInGame) {
+        userInterface.inscriptionRollTheDices(ktorego);
+        List<Integer> discardedDice = rzutKostkamiModel.kolejnyRzutKostkami(dicesInGame);
+        userInterface.wyswietlRzutKostka(discardedDice);
+        return discardedDice;
+    }
 
 
-//    public void rollTheRemainingDice()
-//    {
-//
-//    }
+    public List<Integer> keepAndRoll(String ktorego, List<Integer> discardedDice) {
+        List<Integer> dicesInGame = generateRollOfDice(discardedDice);
+        return rollTheRemainingDice(ktorego, dicesInGame);
+    }
+
+
+    public Categories selectCategories() {
+        int categoryNumber = userInterface.chooseTheCategory();
+        Map<Integer, Categories> map = userInterface.createMapOfCategories();
+                                return map.get(categoryNumber);
+    }
+
+    public void addPointsToTable(Categories choosenCategory, List<Integer> discardedDice3) {
+
+        int points = calculatePoints(choosenCategory, discardedDice3);
+
+            current.addResult(choosenCategory, points);
+
+        userInterface.wyswietlTabliceZeStanemGry(player1, player2);
+    }
+
+    public boolean endOfGame(){
+        if (player1.getWynikiSize() == userInterface.createMapOfCategories().size() &&
+                player2.getWynikiSize() == userInterface.createMapOfCategories().size()) return true;
+              return  false;
+    }
 }
 
 

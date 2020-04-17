@@ -37,6 +37,8 @@ public Integer generujRzutJednaKostka(){
 
         return secondTimesThrowTheDice;
     }
+
+
     public List<Integer> wyczyscListeDicesInGame(List<Integer> dicesInGame){
         return List.of();
     }

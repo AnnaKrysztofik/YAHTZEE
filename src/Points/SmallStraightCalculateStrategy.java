@@ -14,9 +14,9 @@ public class SmallStraightCalculateStrategy implements PointsCalculateStrategyIn
     @Override
     public int calculate(Categories category, List<Integer> dices) {
 
-            List<Integer> dicesSorted = dices.stream().sorted().collect(Collectors.toList());
+            List<Integer> dicesSorted = dices.stream().distinct().sorted().collect(Collectors.toList());
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (dicesSorted.get(i + 1) != dicesSorted.get(i) + 1) return 0;
             }
             return 30;

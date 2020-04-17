@@ -5,6 +5,8 @@ public class Main {
         GameManager gameManager = new GameManager();
         gameManager.courseOfGame();
 
+    //    UserInterface userInterface = new UserInterface();
+   //  userInterface.createMapOfCategories();
 
 
 

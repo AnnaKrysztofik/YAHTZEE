@@ -15,11 +15,15 @@ public class PlayerModel {
         this.name = name;
     }
 
-    public boolean addResult(Categories category, int wynik) {
-        if (wyniki.containsKey(category)) return false;
+    public void addResult(Categories category, int wynik) {
         wyniki.put(category, wynik);
+    }
+
+    public boolean containsCategory(Categories category) {
+        if (wyniki.containsKey(category)) return false;
         return true;
     }
+
 
     public String getName() {
         return this.name;
@@ -32,6 +36,10 @@ public class PlayerModel {
     public Integer getSumaPunktow() {
        return wyniki.values().stream().mapToInt(i->i).sum();
     }
+
+    public Integer getWynikiSize(){return wyniki.size();}
+
+
 
 
 
