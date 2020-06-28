@@ -1,13 +1,13 @@
-package Points;
+package main.Points;
 
-import Enums.Categories;
+import main.Enums.Categories;
 
 import java.util.List;
 
 public class FourCalculateStrategy implements PointsCalculateStrategyInterface{
     @Override
     public boolean canCalculate(Categories category) {
-        return category == Categories.CZWORKA;
+        return category == Categories.FourOfAKind;
     }
 
     @Override

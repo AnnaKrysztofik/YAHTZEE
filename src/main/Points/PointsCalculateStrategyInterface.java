@@ -1,6 +1,6 @@
-package Points;
+package main.Points;
 
-import Enums.Categories;
+import main.Enums.Categories;
 
 import java.util.List;
 

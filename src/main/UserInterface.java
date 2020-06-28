@@ -1,5 +1,7 @@
-import Enums.Categories;
-import Player.PlayerModel;
+package main;
+
+import main.Enums.Categories;
+import main.Player.PlayerModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,50 +12,47 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-
-    private static final List<Categories> listaKategorii = List.of(Categories.JEDYNKI, Categories.DWOJKI, Categories.TROJKI,
-            Categories.CZWORKI, Categories.PIATKI, Categories.SZOSTKI, Categories.TROJKA, Categories.CZWORKA, Categories.FULL,
-            Categories.MALY_STRIT, Categories.DUZY_STRIT, Categories.GENERAL, Categories.SZANSA);
-
-
+    private static final List<Categories> listOfCategory = List.of(Categories.Aces, Categories.Twos, Categories.Threes,
+            Categories.Fours, Categories.Fives, Categories.Sixes, Categories.ThreeOfAKind, Categories.FourOfAKind, Categories.FullHouse,
+            Categories.SmallStraight, Categories.LargeStraight, Categories.Yahtzee, Categories.Chance);
 
     public UserInterface(){
-
 }
 
 
     public static void welcomeScreen() {
+
         System.out.println("____YAHTZEE____");
     }
 
 
 
+    public void  gameStatus(PlayerModel player1, PlayerModel player2) {
 
-    public void wyswietlTabliceZeStanemGry(PlayerModel player1, PlayerModel player2) {
         System.out.println(player1.getName() + "   " + player2.getName());
-
-        listaKategorii.stream()
+        listOfCategory.stream()
                 .forEach(c ->
                         System.out.println(" " + (player1.getPointsByCategory(c) == null ? "  " : player1.getPointsByCategory(c)) + "" +
                         "     " + (player2.getPointsByCategory(c) == null ? "  " : player2.getPointsByCategory(c)) + "    " +
-                                (c.ordinal()+1) + " " + c.toString())
-
-                );
+                                (c.ordinal()+1) + " " + c.toString()));
 
         System.out.println(" " + player1.getSumaPunktow() + "    " + player2.getSumaPunktow());
     }
 
     public void displayPlayer(PlayerModel player) {
+
         System.out.println("Ruch gracza: " + player.getName());
     }
 
     public static void inscriptionRollTheDices(String ktorego) {
+
         System.out.println("Wynik " + ktorego + " rzutu: ");
     }
 
 
-    public static void wyswietlRzutKostka(List<Integer> wylosowaneKosci) {
-        System.out.println(wylosowaneKosci.toString());
+    public static void showRolledDice(List<Integer> rolledDice) {
+
+        System.out.println(rolledDice.toString());
     }
 
     public static String inscriptionChooseDices() {
@@ -61,7 +60,6 @@ public class UserInterface {
         System.out.println("Które kostki zostają w grze? Wpisz odpowiednie litery oddzielając je przecinkiem, bez spacji");
         Scanner scanner = new Scanner(System.in);
         return scanner.next();
-
     }
 
 
@@ -78,13 +76,14 @@ public class UserInterface {
 
     public Map<Integer,Categories> createMapOfCategories() {
         Map<Integer,Categories> mapOfcategories = new HashMap<Integer,Categories>();
-        for (int i=0;i<listaKategorii.size(); i++) {
-            mapOfcategories.put(i+1, listaKategorii.get(i));
+        for (int i=0;i<listOfCategory.size(); i++) {
+            mapOfcategories.put(i+1, listOfCategory.get(i));
         }
         return mapOfcategories;
     }
 
     public void categoryIsTaken(){
+
         System.out.println("Kategoria jest już zajęta. Wybierz inną. ");
     }
 }

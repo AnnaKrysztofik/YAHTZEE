@@ -1,6 +1,6 @@
-package Points;
+package main.Points;
 
-import Enums.Categories;
+import main.Enums.Categories;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class ChanceCalculateStrategy implements PointsCalculateStrategyInterface
 
     @Override
     public boolean canCalculate(Categories category) {
-        return category == Categories.SZANSA;
+        return category == Categories.Chance;
     }
 
     @Override

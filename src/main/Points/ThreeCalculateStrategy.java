@@ -1,15 +1,15 @@
-package Points;
+package main.Points;
 
-import Enums.Categories;
+import main.Enums.Categories;
 
 import java.util.List;
 
-public class ThreCalculateStrategy implements PointsCalculateStrategyInterface {
+public class ThreeCalculateStrategy implements PointsCalculateStrategyInterface {
 
     @Override
     public boolean canCalculate(Categories category) {
 
-        return category == Categories.TROJKA;
+        return category == Categories.ThreeOfAKind;
     }
 
     @Override

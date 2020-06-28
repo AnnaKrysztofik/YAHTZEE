@@ -1,6 +1,6 @@
-package Points;
+package main.Points;
 
-import Enums.Categories;
+import main.Enums.Categories;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class SmallStraightCalculateStrategy implements PointsCalculateStrategyInterface {
     @Override
     public boolean canCalculate(Categories category) {
-        return category == Categories.MALY_STRIT;
+        return category == Categories.SmallStraight;
     }
 
     @Override
@@ -20,8 +20,6 @@ public class SmallStraightCalculateStrategy implements PointsCalculateStrategyIn
                 if (dicesSorted.get(i + 1) != dicesSorted.get(i) + 1) return 0;
             }
             return 30;
-
-
     }
 }
 
