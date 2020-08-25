@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerModel {
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String name;
     private Map<Categories, Integer> results;
 
@@ -16,9 +20,9 @@ public class PlayerModel {
         this.name = name;
     }
 
-    public void addResult(Categories category, int wynik) {
+    public void addResult(Categories category, int result) {
 
-        results.put(category, wynik);
+        results.put(category, result);
     }
 
     public boolean containsCategory(Categories category) {
@@ -41,12 +45,12 @@ public class PlayerModel {
         return this.results.get(category);
     }
 
-    public Integer getSumaPunktow() {
+    public Integer getSumOfPoints() {
 
         return results.values().stream().mapToInt(i -> i).sum();
     }
 
-    public Integer getWynikiSize() {
+    public Integer getResultsSize() {
 
         return results.size();
     }

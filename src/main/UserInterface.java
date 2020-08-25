@@ -25,7 +25,16 @@ public class UserInterface {
         System.out.println("____YAHTZEE____");
     }
 
+    public void yoursName(PlayerModel player1, PlayerModel player2){
+        name("pierwszego", player1);
+        name("drugiego", player2);
+    }
 
+    public static void name(String which, PlayerModel player){
+        System.out.println("Podaj imię " + which + " gracza:");
+        Scanner scanner = new Scanner(System.in);
+        player.setName(scanner.next());
+    }
 
     public void  gameStatus(PlayerModel player1, PlayerModel player2) {
 
@@ -36,7 +45,7 @@ public class UserInterface {
                         "     " + (player2.getPointsByCategory(c) == null ? "  " : player2.getPointsByCategory(c)) + "    " +
                                 (c.ordinal()+1) + " " + c.toString()));
 
-        System.out.println(" " + player1.getSumaPunktow() + "    " + player2.getSumaPunktow());
+        System.out.println(" " + player1.getSumOfPoints() + "    " + player2.getSumOfPoints());
     }
 
     public void displayPlayer(PlayerModel player) {

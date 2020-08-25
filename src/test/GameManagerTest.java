@@ -154,6 +154,6 @@ class GameManagerTest {
         playerModel.addResult(Categories.Twos, 4);
 
         // Assert
-        assertEquals(9, playerModel.getSumaPunktow());
+        assertEquals(9, playerModel.getSumOfPoints());
     }
 }

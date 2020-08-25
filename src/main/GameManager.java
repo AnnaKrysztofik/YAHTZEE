@@ -33,8 +33,8 @@ public class GameManager {
 
     public GameManager() {
 
-        player1 = new PlayerModel("Ania");
-        player2 = new PlayerModel("Jacek");
+        player1 = new PlayerModel("Gracz 1");
+        player2 = new PlayerModel("Gracz 2");
         current = player1;
         rollTheDicesModel = new RollTheDicesModel();
         dicesInGame = new ArrayList<>();
@@ -48,6 +48,7 @@ public class GameManager {
 
     public void courseOfGame() {
         userInterface.welcomeScreen();
+        userInterface.yoursName(player1, player2);
         userInterface.gameStatus(player1, player2);
         do {
             userInterface.displayPlayer(current);
@@ -56,13 +57,14 @@ public class GameManager {
             List<Integer> discardedDice2 = keepAndRoll("drugiego", discardedDice);
             List<Integer> discardedDice3 = keepAndRoll("trzeciego", discardedDice2);
 
-           Categories choosenCategory;
+           Categories choseCategory;
             do
                 {
-                choosenCategory = selectCategories();
-                } while (current.containsCategory(choosenCategory) == false);
+                choseCategory = selectCategories();
+                userInterface.categoryIsTaken();
+                } while (current.containsCategory(choseCategory) == false);
 
-           addPointsToTable(choosenCategory, discardedDice3);
+           addPointsToTable(choseCategory, discardedDice3);
            nextPlayer();
         } while (endOfGame() == false);
     }
@@ -137,17 +139,17 @@ public class GameManager {
         return map.get(categoryNumber);
     }
 
-    public void addPointsToTable(Categories choosenCategory, List<Integer> discardedDice3) {
+    public void addPointsToTable(Categories choseCategory, List<Integer> discardedDice3) {
 
-        int points = calculatePoints(choosenCategory, discardedDice3);
-        current.addResult(choosenCategory, points);
+        int points = calculatePoints(choseCategory, discardedDice3);
+        current.addResult(choseCategory, points);
         userInterface.gameStatus(player1, player2);
     }
 
     public boolean endOfGame() {
 
-        if (player1.getWynikiSize() == userInterface.createMapOfCategories().size() &&
-                player2.getWynikiSize() == userInterface.createMapOfCategories().size()) return true;
+        if (player1.getResultsSize() == userInterface.createMapOfCategories().size() &&
+                player2.getResultsSize() == userInterface.createMapOfCategories().size()) return true;
         return false;
     }
 }

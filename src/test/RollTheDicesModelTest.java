@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RzutKostkamiModelTest {
+class RollTheDicesModelModelTest {
 
     @Test
     public void nextDiceRollKeepFiveDices(){
