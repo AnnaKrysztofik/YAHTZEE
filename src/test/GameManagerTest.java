@@ -7,9 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,6 +81,7 @@ class GameManagerTest {
         GameManager sut = new GameManager();
         List<String> lisOfLetters = List.of("A", "C", "E");
         List<Integer> discardedDice = List.of(1, 3, 5, 6, 4);
+
         // Act
         List<Integer> result = sut.listOfDicesInGame(lisOfLetters, discardedDice);
 
@@ -97,6 +96,7 @@ class GameManagerTest {
         GameManager sut = new GameManager();
         List<String> lisOfLetters = List.of("D", "C", "E");
         List<Integer> discardedDice = List.of(1, 3, 5, 6, 4);
+
         // Act
         List<Integer> result = sut.listOfDicesInGame(lisOfLetters, discardedDice);
 
@@ -147,7 +147,6 @@ class GameManagerTest {
     public void addPointsToTable() {
         // Arrange
         PlayerModel playerModel = new PlayerModel("Ania");
-        //Map<Categories, Integer> results = new HashMap<>();
 
         // Act
         playerModel.addResult(Categories.Aces, 5);

@@ -1,14 +1,8 @@
 package test;
 
 import main.Enums.Categories;
-import main.GameManager;
 import main.Player.PlayerModel;
 import org.junit.jupiter.api.Test;
-
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +42,10 @@ class PlayerModelTest {
         // Arrange
         PlayerModel playerModel = new PlayerModel("Ania");
         playerModel.addResult(Categories.Threes,19);
+
         // Act
         Integer result = playerModel.getPointsByCategory(Categories.Threes);
+
         //Assert
         assertEquals(19,result);
 
@@ -58,11 +54,11 @@ class PlayerModelTest {
     public void getPointsByCategoryNull_Test() {
         // Arrange
         PlayerModel playerModel = new PlayerModel("Ania");
+
         // Act
         Integer result = playerModel.getPointsByCategory(Categories.Threes);
 
         //Assert
         assertNull(result);
-
     }
 }
